@@ -1,0 +1,3 @@
+export const TOOGLE_LIKE_PROGRESS = 'TOOGLE_LIKE_PROGRESS';
+export const SET_COMMENTS = 'SET_COMMENTS';
+export const DELETE_POST = 'DELETE_POST';
