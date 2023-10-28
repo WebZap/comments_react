@@ -1,7 +1,8 @@
-import {LoginButton, LoginForm, LoginInput, LoginLabel} from "../StyledRegLog.js";
+import {LinkButton, LoginButton, LoginForm, LoginInput, LoginLabel} from "../StyledRegLog.js";
 import {Field, reduxForm} from "redux-form";
 import React from "react";
 import SuperWrappStyled from "../../../HOC/SuperWrappStyled.jsx";
+import {WhiteText, WrappButtons} from "../../../styled/main_styled_components";
 
 
 const LoginFormRedux = (props) => {
@@ -15,7 +16,12 @@ const LoginFormRedux = (props) => {
             <LoginLabel>Пароль:</LoginLabel>
             <Field type="password" name="password" component={LoginFormInput}/>
 
-            <LoginButton>Присоединиться</LoginButton>
+            <WrappButtons>
+                <LoginButton>Войти</LoginButton>
+                <WhiteText textsize='15'>или</WhiteText>
+                <LinkButton to='/registration' >Присоединиться</LinkButton>
+            </WrappButtons>
+
 
         </LoginForm>
     )

@@ -8,13 +8,23 @@ import {
 import {useDispatch} from "react-redux";
 import LoginFormRedux from "./LoginFormRedux.jsx";
 import {loginUser} from "../../../redux/reducers/authReducer/authReducer.js";
+import {useNavigate} from 'react-router-dom';
 
 
 const Login = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const onSubmit = (data) => {
-        dispatch(loginUser(data))
+        // const promiseOnSubmit = new Promise(resolve => {
+        //     setTimeout(() => {
+        //         dispatch(loginUser(data));
+        //         resolve()
+        //     }, 2000)
+        // })
+        // promiseOnSubmit.then(() => navigate('/'))
+        dispatch(loginUser(data,navigate));
     }
+
 
     return (
         <CenteredContainer>

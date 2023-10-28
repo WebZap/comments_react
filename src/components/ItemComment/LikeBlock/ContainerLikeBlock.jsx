@@ -1,8 +1,8 @@
 import React from 'react';
-import {LikeButton, Likes, LikesCounter} from "../../../styled/main_styled_components.js";
 import LikeBlock from "./LikeBlock.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {toggleLike} from "../../../redux/reducers/commentReducer/commentsReducer.js";
+import cookie from "../../../helpers/cookieFunc.js";
 
 const ContainerLikeBlock = (props) => {
     const dispatch = useDispatch()
@@ -11,9 +11,9 @@ const ContainerLikeBlock = (props) => {
         likeInProgress : state.comments.likeInProgress,
         isAuth: state.auth.user.isAuth
     }))
-
+    const token = cookie.take('token')
     const onClickLike = (id) => {
-        dispatch(toggleLike(id,isAuth))
+        dispatch(toggleLike(id,token))
     }
 
     return <LikeBlock countLikes={props.countLikes}

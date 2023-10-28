@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     AuthorName,
     Comment,
@@ -11,6 +11,8 @@ import {
 import moment from "moment";
 import ContainerLikeBlock from "./LikeBlock/ContainerLikeBlock";
 import logoNoAuthUser from "../../assets/img/userNoAuth.png"
+import doInProgress from "../../helpers/methodSome";
+import cookie from "../../helpers/cookieFunc.js";
 
 const ItemComment = (props) => {
     const {
@@ -21,16 +23,19 @@ const ItemComment = (props) => {
         id,
         deleteCommentInProgress,
         onClickDeleteComment,
-        isAuth,
-        nameAuthUser,
-        imageUserAuthUrl
+
     } = props
+
+    const token = cookie.take('token')
+    const nameAuthUser = cookie.take('nameUser')
+    const imageUserAuthUrl = cookie.take('imageUrl')
+
     console.log(imageUserAuthUrl)
     return (
         <Comment>
             <CommentHeader>
                 <UserInfoBlock>
-                    {!isAuth ? null :
+                    {!token ? null :
                         (nameAuthUser === author.name ?
                             <UserIcon image={imageUserAuthUrl}/>
                             :
@@ -49,9 +54,9 @@ const ItemComment = (props) => {
             </CommentBody>
             <div style={{display: "flex", gap: "30px"}}>
                 <ContainerLikeBlock countLikes={likes} id={id}/>
-                {!isAuth ? null :
+                {!token ? null :
                     (nameAuthUser === author.name ?
-                        <button disabled={deleteCommentInProgress.some(item => item === id)}
+                        <button disabled={doInProgress(deleteCommentInProgress, id)}
                                 onClick={() => onClickDeleteComment(id)}>
                             Удалить
                         </button> : null)

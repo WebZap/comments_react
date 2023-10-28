@@ -7,7 +7,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   padding-top: 80px;
   padding-bottom: 200px;
   background: #202020;
@@ -159,3 +158,17 @@ export const AuthorName = styled.div`
   display: flex;
   align-items: center;
 `
+
+export const WrappButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`
+
+export const WhiteText = styled.p`
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-size: ${({ textsize }) => textsize}px;;
+`
+

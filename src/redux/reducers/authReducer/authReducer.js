@@ -2,7 +2,9 @@ import AuthRequests from "../../../api/Auth_API.js";
 import errorRequest from "../../../helpers/errorRequest.js";
 import {DISABLE_DATA, SET_USER_DATA} from "./authVariablesActions.js";
 import {disableDataUser, setDataUser} from "./authActions.js";
-import deleteCookie from "../../../helpers/deleteCookie.js";
+import cookie from "../../../helpers/cookieFunc.js";
+
+export const SET_SUBMIT = 'SET_SUBMIT'
 
 const initialState = {
     user: {
@@ -10,11 +12,12 @@ const initialState = {
         name: null,
         imageUrl: null,
         isAuth: false,
-    }
+    },
 }
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
+
         case SET_USER_DATA:
             return {
                 ...state,
@@ -30,7 +33,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: {
-                    id : null,
+                    id: null,
                     name: null,
                     imageUrl: null,
                     token: null,
@@ -42,18 +45,27 @@ export const authReducer = (state = initialState, action) => {
     }
 }
 
-export const registerUser = (data) => async (dispatch) => {
+export const registerUser = (data,navigate) => async (dispatch) => {
     try {
         const response = await new AuthRequests().registerUser(data)
+            .then(data => {
+                navigate('/')
+                return data
+            })
         dispatch(setDataUser(response))
     } catch (error) {
         errorRequest(error)
     }
 }
 
-export const loginUser = (data) => async (dispatch) => {
+export const loginUser = (data, navigate) => async (dispatch) => {
     try {
         const response = await new AuthRequests().loginInUser(data)
+            .then((data) => {
+                navigate('/')
+                return data
+            })
+
         dispatch(setDataUser(response))
     } catch (error) {
         errorRequest(error)
@@ -62,6 +74,12 @@ export const loginUser = (data) => async (dispatch) => {
 
 export const logoutUser = () => async (dispatch) => {
     dispatch(disableDataUser());
-    deleteCookie()
+    cookie.delete()
 }
 
+
+export const setSubmit = () => {
+    return {
+        type: SET_SUBMIT,
+    }
+}

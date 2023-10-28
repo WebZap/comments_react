@@ -7,11 +7,12 @@
     <title>Регистрация</title>
     <style>
 
-        *{
+        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         .centered_container {
             display: flex;
             justify-content: center;
@@ -99,8 +100,54 @@
     </div>
 </div>
 
+
 <script>
-    // Your JavaScript code here
+
+    // 'name=pavel; lastname=zaporozhtsev';
+
+    const setCookie = (name, value) => {
+        document.cookie = `${name}=${value}`
+    }
+
+    // [ name=pavel], [ lastname=zaprozhtsev]
+    // [name=pavel], [lastname=zaprozhtsev]
+    // []
+
+
+    const takeCookieData = (name) => {
+        return document // мы обращаемся к объекту браузера document
+            .cookie // заходим в свойства объекта и получаем резульат обращения
+            .split(';') // разделяем строку по разделителю, и вовзращем массив
+            .map(item => // через метод мап, обращаемся к каждому элементу массива (строка)
+                item.trim() // с помощью метода трим() удаляем все пробелвы в каждой строке
+                    .split('=')) // разделяем(разделитель =) каждый элемент(массивом) на массив с подстрок
+            .find(item =>  // с помощью метода find (который проходит по каждому элементу массива, и возвращет первый подходящий элемент по условию)
+                item[0] === name) // в каждом массиве по свойсву с индексом 0 сравнивает с приходящем значением из параметра функциии
+            // возвращает первый массив
+            [1] //возвращается элемент массива под индексом 0
+    }
+
+    // const takeCookieData = (name) => {
+    //     return document
+    //         .cookie.split(';').map(item => item.trim().split('=')).find(item => item[0] === name)[1]
+    // }
+
+    const takeCookieData = (name) => {
+        const cookieString = document.cookie;
+        const cookieArray = cookieString.split(';').map(item => item.trim().split('='))
+        const cookieItemData = cookieArray.find(item => item[0] === name)
+        return cookieItemData ? cookieItemData[1] : null
+    }
+
+    setCookie('name', 'pavel');
+    setCookie('lastname', 'zaporozhtsev');
+
+
+    let name = takeCookieData('name')
+    let lastName = takeCookieData('lastname')
+    console.log(name, lastName)
+
+
 </script>
 
 </body>
